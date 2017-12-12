@@ -1,75 +1,54 @@
-from dictionary import*
+from hanc_combined_codes import*
+from tkinter import*
 
-class HancSecurity:
-    #This part will be for encryption and decryption purpose
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    def __init__(self, input_file = "Input File", key = 0, crypt_type = "encrypt"):
-        self.input_file = input_file
-        self.key= key
-        self.crypt_type = crypt_type
-        self.cipher = ""
-        self.message = ""
-        self.import_file()
+def click():
+    key1 = int(entry_1.get()) #this will collect the text from the entry box
+    crypt1 = entry_2.get()
+    use_mgs1 = entry3.get()
+    transl_text = HancSecurity(key1, use_mgs1, crypt1)
+    try1 = transl_text.crypting()
+    output2.delete(0.0, END)
+    try:
+        mycipher = try1
+    except:
+        mycipher = "Sorry, something is wrong with your input. Please check again."
+    output2.insert(END, mycipher)
+def close_window():
+    wn.destroy()
+    exit()
 
-        self.t1 = Dictionary(self.key, self.input_file).dict1
-        self.t2 = Dictionary(self.key, self.input_file).dict2
-        self.t3 = Dictionary(self.key, self.input_file).key_functions()[0]
-        self.t4 = Dictionary(self.key, self.input_file).key_functions()[1]
+wn = Tk()
+wn.title("HancSecurity")
+wn.configure(background = "lightgreen")
 
-    def import_file(self):
-        f = open(self.input_file, "r")
-        if self.crypt_type == "encrypt":
-            self.message = f.read()
-        elif self.crypt_type == "decrypt":
-            self.cipher = f.read()
-        f.close()
+label1 = Label(wn, text="Have fun texting your friend securely!", bg = "red", fg = "black", font = "none 12 bold")
+label1.grid(row = 1, column = 0, sticky = W)
 
-    def export_file(self, text_to_export, filename):
-        f = open(filename, "w")
-        f.write(text_to_export)
-        f.close()
-        print("File exported to " + filename)
+label2 = Label(wn, text ="Your Key < 100", bg = "blue", fg = "yellow", font = "none 12 bold")
+label2.grid(row = 2, column = 0, sticky = W)
+label3 = Label(wn, text ="encrypt or decrypt", bg = "blue", fg = "yellow", font = "none 12 bold")
+label3.grid(row = 2, column = 1, sticky = W)
 
-    def encrypt(self):
-        output = ""
-        for i in self.message:
-            if i.upper() in self.alphabet:
-                v = self.t1[i.upper()]
-                u = self.t3[v]
-                output += u
-            else:
-                output += i
-        return output
+entry_1 = Entry(wn, width = 20, bg = "white")
+entry_1.grid(row = 3, column = 0, sticky = W)
+entry_2 = Entry(wn, width = 24, bg = "white")
+entry_2.grid(row = 3, column = 1, sticky = W)
+bt1 = Button(wn, text= "Crypting", width = 8, command = click)
+bt1.grid(row = 3, column = 2, sticky = W)
 
-    def decrypt(self):
-        output = ""
-        convert_list = []
-        for i in self.cipher():
-            if i in self.alphabet:
-                m = self.t4[i]
-                convert_list.append(m)
-            else:
-                convert_list.append(i)
-        for i in range(len(convert_list)):
-            if type(convert_list[i]) is int:
-                output += self.t2[i]
-            else:
-                output += str(convert_list[i])
-        return output
+entry3 = Entry(wn, width = 100, bg = "white")
+entry3.grid(row=5, column = 0, columnspan=3, sticky=W)
 
-def main():
-    #A sample encryption
-    cipher0 = HancSecurity("message_input.txt", 3, "encrypt")
-    cipher_text0 = cipher0.encrypt()
-    cipher0.export_file(cipher_text0, "hanc_smp1.txt")
-
-    cipher3 = HancSecurity("hanc_smp1.txt", 3, "decrypt")
-    cipher_text3 = cipher3.decrypt()
-    cipher3.export_file(cipher_text3, "hanc_samp1_decrypt.txt")
+label4 = Label(wn, text ="Below is your translation. Feel free to try to find the algorithm. Thank you", bg = "blue", fg = "yellow", font = "none 12 bold")
+label4.grid(row = 6, column = 0, sticky = W)
+output2 = Text(wn, width = 100, height = 10, wrap = WORD, background = "white")
+output2.grid(row=7, column = 0, columnspan=3, sticky=W)
 
 
+label5 = Label(wn, text="Click to exit:", bg = "black", fg = "white", font = "none 12 bold")
+label5.grid(row = 8, column = 0, sticky = S)
+Button(wn, text = "Exit", width = 13, command = close_window).grid(row=9, column = 0, sticky = S)
 
 
-if __name__ == "__main__":
-    main()
+wn.mainloop()
 

@@ -9,7 +9,7 @@ class Dictionary():
         :param key: user input key
         :param file_input: msg to translate
         """
-        self.key = key
+        self.tk = key
         self.input_file = input_file
         self.dict1 = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8,
                     "I": 9, "J": 10, "K": 11, "L": 12, "M":13, "N":14, "O": 15, "P": 16,
@@ -23,7 +23,7 @@ class Dictionary():
 
     def key_functions(self):
         wrd_count = len(self.input_file)
-        a = self.key
+        a = self.tk
         x_value = list(self.dict1.values())
 
         func_key_list = [0]
@@ -36,7 +36,7 @@ class Dictionary():
         else:
             func_key_list.append(f1)
 
-        f2 = int(math.pow(math.e, (a-x_value[1]))%27)
+        f2 = int(math.pow((a/math.e), (x_value[1]))%27)
         l2 = 0
         while f2 in func_key_list:
             f2 = (f2 + 1) % 27
@@ -116,7 +116,7 @@ class Dictionary():
         else:
             func_key_list.append(f11)
 
-        f12 = int(math.pow((wrd_count+ x_value[11]), a)%27)
+        f12 = int(math.pow((wrd_count+ a), x_value[11])%27)
         l12 = 0
         while f12 in func_key_list:
             f12 = (f12 + 1) % 27
@@ -124,7 +124,7 @@ class Dictionary():
         else:
             func_key_list.append(f12)
 
-        f13 = int(math.pow(wrd_count,(a*x_value[12]))%27)
+        f13 = int(math.pow(wrd_count,(a/x_value[12]))%27)
         l13 = 0
         while f13 in func_key_list:
             f13 = (f13 + 1) % 27
@@ -156,7 +156,7 @@ class Dictionary():
         else:
             func_key_list.append(f16)
 
-        f17 = int(math.pow(math.pow(wrd_count,a), (1/x_value[16]))%27)
+        f17 = int(math.pow(math.pow(wrd_count,x_value[16]), (1/a))%27)
         l17 = 0
         while f17 in func_key_list:
             f17 = (f17 + 1) % 27
@@ -196,7 +196,7 @@ class Dictionary():
         else:
             func_key_list.append(f21)
 
-        f22 = int((math.pow(wrd_count, a)/x_value[21])%27)
+        f22 = int((math.pow(wrd_count, 1/a)*x_value[21])%27)
         l22 = 0
         while f22 in func_key_list:
             f22 = (f22 + 1) % 27
@@ -204,7 +204,7 @@ class Dictionary():
         else:
             func_key_list.append(f22)
 
-        f23 = int((math.pow(x_value[22],a)/wrd_count)%27)
+        f23 = int((math.pow(x_value[22],1/a)/wrd_count)%27)
         l23 = 0
         while f23 in func_key_list:
             f23 = (f23 + 1) % 27
@@ -250,13 +250,20 @@ class Dictionary():
         return dict3, dict4, key_plus_loop
 
 def main():
-    h = "Hi. I am Makara. I love you so much Makara. I am yourself."
-    k = Dictionary(3, h)
-    print(k.dict1)
-    print(k.dict2)
+    h = "This is crazy. i have been working with this for whole time and nothing works."
+    k = Dictionary(4, h)
+    t = Dictionary(3, h)
+    print(t.key_functions()[0])
+    print(t.key_functions()[1])
+    print(t.dict1)
+    print(t.dict2)
+
+    print("\n")
     print(k.key_functions()[0])
     print(k.key_functions()[1])
-    print(k.key_functions()[2])
+    print(k.dict1)
+    print(k.dict2)
+
 if __name__ == "__main__":
     main()
 
